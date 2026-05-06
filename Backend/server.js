@@ -21,16 +21,14 @@ app.get("/", (req, res) => {
   res.send("Backend Running");
 });
 
-const startServer = async () => {
-  try {
-    await connectDB();
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`Server running on ${PORT}`);
-    });
-  } catch (error) {
-    console.error("Failed to connect to DB", error);
-  }
-};
+// Connect to Database
+connectDB();
 
-startServer();
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on ${PORT}`);
+  });
+}
+
+module.exports = app;
